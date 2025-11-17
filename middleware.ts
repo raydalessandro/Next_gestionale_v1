@@ -8,6 +8,11 @@ export async function middleware(req: NextRequest) {
   
   const { data: { session } } = await supabase.auth.getSession();
   
+  // ✅ AGGIUNGI QUESTA ECCEZIONE PER AUTH CALLBACK
+  if (req.nextUrl.pathname.startsWith('/auth/callback')) {
+    return res;
+  }
+  
   // Public routes
   if (req.nextUrl.pathname.startsWith('/login') || 
       req.nextUrl.pathname.startsWith('/register')) {
